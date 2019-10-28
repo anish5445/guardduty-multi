@@ -22,7 +22,7 @@ resource "aws_s3_bucket_object" "ipset" {
 resource "aws_guardduty_ipset" "ipset" {
   count       = var.is_guardduty_master && var.has_ipset ? 1 : 0
   activate    = var.ipset_activate
-  detector_id = aws_guardduty_detector.detector.[each.key]
+  detector_id = aws_guardduty_detector.detector.id
   format      = var.ipset_format
   location    = "https://s3.amazonaws.com/${aws_s3_bucket.bucket[0].id}/${local.ipset_key}"
   name        = local.ipset_name
